@@ -8,24 +8,19 @@ export class PostDB extends BaseDB implements PostGateway {
 
     private postsCollection = 'posts';
 
-
     public async createPost(post: Post): Promise<any> {
         try {
 
             const userId = await this.db.collection('users')
                 .doc(post.getAuthorName()).get()
 
-
-            const comments =  await this.db.collection('comments').where("user_id", "==", userId.data()).get()
-
-            const commentsQuantity = comments.size
-
             await this.db.collection(this.postsCollection).doc().set({
                 author: userId.data()?.nickname,
                 title: post.getTitle(),
                 text: post.getText(),
-                commentsQuantity      
-            }) 
+                commentsQuantity: 0,
+                votesQuantity: 0
+            })
 
         } catch (error) {
             console.log('Error creating new post:', error);
@@ -36,15 +31,24 @@ export class PostDB extends BaseDB implements PostGateway {
 
         try {
 
-            const postDetails = this.db.collection(this.postsCollection).where("id", "==", postId);
+            const postDetails = await this.db.collection(this.postsCollection).doc(postId).get();
+            console.log(postDetails.data())
+            return postDetails.data()
 
-            return postDetails
 
         } catch (err) {
             throw new BadRequestError(err.message)
         }
-
     }
 
+    public async updateCommentsQuantity(cQuantity: number, postId: string): Promise<any> {
+        await this.db.collection(this.postsCollection).doc(postId)
+            .set({ commentsQuantity: cQuantity }, { merge: true });
+    }
+
+    public async updateVotesQuantity(vQuantity: number, postId: string): Promise<any> {
+        await this.db.collection(this.postsCollection).doc(postId)
+            .set({ votesQuantity: vQuantity }, { merge: true });
+    }
 
 }

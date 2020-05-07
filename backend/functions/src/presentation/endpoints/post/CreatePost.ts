@@ -11,7 +11,8 @@ export const createPostsEndpoint = async (req: Request, res: Response) => {
             author: req.headers.auth as string,
             title: req.body.title,
             text: req.body.text,
-            commentsQuantity: req.headers.auth as string
+            commentsQuantity: req.body.commentsQuantity,
+            votesQuantity: req.body.votesQuantity 
         });
 
         res.status(200).send(result);

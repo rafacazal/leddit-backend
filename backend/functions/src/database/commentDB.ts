@@ -18,7 +18,8 @@ export class CommentDB extends BaseDB implements CommentGateway {
 
             await this.db.collection(this.commentsCollection).doc().set({
                 userName: userId.data()?.nickname,
-                text: comment.getText()
+                text: comment.getText(),
+                votesQuantity: 0
             })
 
         } catch (error) {

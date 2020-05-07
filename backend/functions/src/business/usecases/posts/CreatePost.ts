@@ -19,7 +19,8 @@ export class CreatePostUC {
                 userId,
                 input.title,
                 input.text,
-                input.commentsQuantity
+                input.commentsQuantity,
+                input.votesQuantity
             );
 
             await this.postGateway.createPost(newPost)
@@ -38,7 +39,8 @@ export interface CreatePostInput {
     author: string,
     title: string,
     text: string,
-    commentsQuantity: string
+    commentsQuantity: number,
+    votesQuantity: number
 }
 
 export interface CreatePostOutput {

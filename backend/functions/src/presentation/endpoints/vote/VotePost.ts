@@ -1,18 +1,19 @@
 import { Request, Response } from "express";
-import { GetPostDetailsUC } from "../../../business/usecases/posts/GetPostDetails";
+import { VotePostUC } from "../../../business/usecases/vote/VotePost";
+import { VoteDB } from "../../../database/voteDB";
 import { PostDB } from "../../../database/postDB";
 
 
-export const getPostDetailsEndpoint = async (req: Request, res: Response) => {
+export const votePostEndpoint = async (req: Request, res: Response) => {
     try {
-        const getPostDetailsUC = new GetPostDetailsUC( new PostDB() );
+        const votePostUC = new VotePostUC(new VoteDB(), new PostDB());
 
-        const result = await getPostDetailsUC.execute({
+        const result = await votePostUC.execute({
             token: req.headers.auth as string,
             postId: req.params.postId,
+            voteDirection: req.body.voteDirection
         });
-        console.log(result)
-        
+
         res.status(200).send(result);
     } catch (err) {
         res.status(400).send({
@@ -20,5 +21,4 @@ export const getPostDetailsEndpoint = async (req: Request, res: Response) => {
             ...err
         });
     }
-
 };

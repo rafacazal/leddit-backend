@@ -1,0 +1,5 @@
+import Vote from "../entities/vote";
+
+export interface VoteGateway {
+    votePost(vote: Vote): Promise<any> 
+}

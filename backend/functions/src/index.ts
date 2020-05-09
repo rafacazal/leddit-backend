@@ -11,7 +11,7 @@ const firebaseConfig = {
   authDomain: functions.config().someservice.authdomain,
   databaseURL: functions.config().someservice.databaseurl,
   projectId: functions.config().someservice.projectid,
-  storageBucket:functions.config().someservice.storagebucket,
+  storageBucket: functions.config().someservice.storagebucket,
   messagingSenderId: functions.config().someservice.messagingsenderid,
   appId: functions.config().someservice.appid
 }

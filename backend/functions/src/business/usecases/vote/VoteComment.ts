@@ -1,17 +1,17 @@
 import { VoteGateway } from "../../gateways/VoteGateway";
 import Vote, { VoteDirection } from "../../entities/vote";
 import { FirebaseAdmin } from "../../../utils/firebaseAdmin";
-import { PostGateway } from "../../gateways/PostGateway";
+import { CommentGateway } from "../../gateways/CommentGateway";
 
 
-export class VotePostUC {
+export class VoteCommentUC {
     constructor(
         private voteGateway: VoteGateway,
 
-        private postGateway: PostGateway
+        private commentGateway: CommentGateway
     ) { }
 
-    async execute(input: VotePostInput): Promise<VotePostOutput> {
+    async execute(input: VoteCommentInput): Promise<VoteCommentOutput> {
 
         try {
 
@@ -19,17 +19,17 @@ export class VotePostUC {
 
             const token = await auth.getIdFromToken(input.token);
 
-            const newVotePost = new Vote(
+            const newVoteComment = new Vote(
                 input.voteDirection,
-                input.postId,
+                input.commentId,
                 token
             );
 
-            await this.voteGateway.votePost(newVotePost)
+            await this.voteGateway.voteComment(newVoteComment)
 
-            const postData = await this.postGateway.getPostDetails(input.postId)
+            const commentData = await this.commentGateway.getCommentsDetails(input.commentId)
 
-            await this.postGateway.updateVotesQuantity(postData.votesQuantity + 1 || -1, input.postId)
+            await this.commentGateway.updateVotesQuantity( commentData.votesQuantity , input.commentId)
 
             return {
                 message: "voto computado com sucesso"
@@ -41,13 +41,13 @@ export class VotePostUC {
     }
 }
 
-export interface VotePostInput {
+export interface VoteCommentInput {
     voteDirection: VoteDirection,
-    postId: string,
+    commentId: string,
     token: string
 
 }
 
-export interface VotePostOutput {
+export interface VoteCommentOutput {
     message: string
 }

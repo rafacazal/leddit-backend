@@ -7,6 +7,8 @@ import { createPostsEndpoint } from "./post/CreatePost";
 import { createCommentEndpoint } from "./comment/CreateComment";
 import { getPostDetailsEndpoint } from "./post/GetPostDetails";
 import { votePostEndpoint } from './vote/VotePost';
+import { getCommentsDetailsEndpoint } from "./comment/GetCommentsDetails";
+import { voteCommentEndpoint } from "./vote/VoteComment";
 
 export const app = express();
 app.use(cors({ origin: true }), express.json());
@@ -22,14 +24,18 @@ app.post('/password', changePasswordEndpoint);
 // posts
 app.post('/create/post', createPostsEndpoint);
 
-app.post('/posts/:postId/comment', createCommentEndpoint);
-
 app.get('/posts/:postId', getPostDetailsEndpoint);
 
+
+// comments
+app.post('/posts/:postId/comment', createCommentEndpoint);
+
+app.get('/comments/:commentId', getCommentsDetailsEndpoint);
 
 
 // vote 
 app.post('/:postId/vote', votePostEndpoint);
 
+app.post('/:commentId/vote', voteCommentEndpoint);
 
 export default app;

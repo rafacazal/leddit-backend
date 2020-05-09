@@ -46,6 +46,7 @@ export class PostDB extends BaseDB implements PostGateway {
             .set({ commentsQuantity: cQuantity }, { merge: true });
     }
 
+    
     public async updateVotesQuantity(vQuantity: number, postId: string): Promise<any> {
         await this.db.collection(this.postsCollection).doc(postId)
             .set({ votesQuantity: vQuantity }, { merge: true });

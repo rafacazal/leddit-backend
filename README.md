@@ -12,7 +12,7 @@ Por fim, ressalta-se que a comunicação da camada `Data` e a `Business` é feit
 Esse foi um projeto de Backend que utilizei para treinar os casos básicos de CRUD de uma API: Create, Read, Update e Delete.
 Para isso, me inspirei na rede social <a target="_blank" href="https://reddit.com/"> Reddit</a> contendo funcionalidades semelhantes ao site como: cadastro, login, trocar senha,  criar e votar em posts, criar e votar em comentários. O que mais aprendi com esse desafio foi fazer a computação de votos e como atualizar o valor dos votos (tanto no post como no comentário). Nessa parte ainda está pendente a "direção" do voto, ou seja, se ele é positivo ou negativo. Em caso positivo, adcionar um voto e em caso negativo anular um voto.   
 
-> status : 80% concluído 
+> status: 80% concluído 
 
 ## Deploy
 #### > https://us-central1-leddit-4be86.cloudfunctions.net/app

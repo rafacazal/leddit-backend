@@ -16,7 +16,8 @@ export class CommentDB extends BaseDB implements CommentGateway {
                 .doc(comment.getUserId()).get()
 
             await this.db.collection(this.commentsCollection).doc().set({
-                userName: userId.data()?.nickname,
+                userName: userId.data()?.username,
+                postId: comment.getPostId(),
                 text: comment.getText(),
                 votesQuantity: 0
             })

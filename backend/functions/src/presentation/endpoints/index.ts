@@ -13,6 +13,7 @@ import { voteCommentEndpoint } from "./vote/VoteComment";
 export const app = express();
 app.use(cors({ origin: true }), express.json());
 
+
 // user
 app.post('/login', loginEndpoint);
 

@@ -24,7 +24,7 @@ export class UserDB extends BaseDB implements UserGateway {
             }
            
             await this.db.collection(this.usersCollection).doc(userUid).set({
-                nickname: user.getNickName(),
+                username: user.getNickName(),
                 email: user.getEmail()
             })
 

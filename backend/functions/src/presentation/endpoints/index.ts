@@ -34,8 +34,8 @@ app.get('/comments/:commentId', getCommentsDetailsEndpoint);
 
 
 // vote 
-app.post('/:postId/vote', votePostEndpoint);
+app.post('/posts/:postId/vote', votePostEndpoint);
 
-app.post('/:commentId/vote', voteCommentEndpoint);
+app.post('/posts/:postId/comment/:commentId/vote', voteCommentEndpoint);
 
 export default app;

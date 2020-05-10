@@ -22,6 +22,7 @@ export class VoteCommentUC {
             const newVoteComment = new Vote(
                 input.voteDirection,
                 input.commentId,
+                input.postId,
                 token
             );
 
@@ -29,12 +30,10 @@ export class VoteCommentUC {
 
             const commentData = await this.commentGateway.getCommentsDetails(input.commentId)
 
-            await this.commentGateway.updateVotesQuantity( commentData.votesQuantity , input.commentId)
-
-            return {
-                message: "voto computado com sucesso"
-            }
-
+            const data = commentData.votesQuantity +1
+             await this.commentGateway.updateVotesCommentQuantity(data, input.commentId)
+            
+            return ({ message: "voto computado com sucesso"})
         } catch (e) {
             throw new Error(e)
         }
@@ -44,8 +43,8 @@ export class VoteCommentUC {
 export interface VoteCommentInput {
     voteDirection: VoteDirection,
     commentId: string,
+    postId: string,
     token: string
-
 }
 
 export interface VoteCommentOutput {

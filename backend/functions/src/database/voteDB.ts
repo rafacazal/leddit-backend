@@ -4,15 +4,13 @@ import Vote from '../business/entities/vote';
 
 export class VoteDB extends BaseDB implements VoteGateway {
 
-    private voteCommentsCollection = 'voteComments';
-
-    private votePostsCollection = 'votePosts';
+    private votesCollection = 'votes';
 
 
     public async votePost(vote: Vote): Promise<any> {
         try {
 
-            await this.db.collection(this.votePostsCollection).doc().set({
+            await this.db.collection(this.votesCollection).doc().set({
                 voteDirection: vote.getVoteType()
             })
 
@@ -25,7 +23,7 @@ export class VoteDB extends BaseDB implements VoteGateway {
     public async voteComment(vote: Vote): Promise<any> {
         try {
 
-            await this.db.collection(this.voteCommentsCollection).doc().set({
+            await this.db.collection(this.votesCollection).doc().set({
                 voteDirection: vote.getVoteType()
             })
 

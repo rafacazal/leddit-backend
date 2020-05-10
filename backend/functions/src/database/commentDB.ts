@@ -26,23 +26,20 @@ export class CommentDB extends BaseDB implements CommentGateway {
         };
     }
 
-
     public async getCommentsDetails(commentId: string): Promise<any> {
         try {
             const commentDetails = await this.db.collection(this.commentsCollection).doc(commentId).get();
+            
             return commentDetails.data()
 
         } catch (err) {
             throw new BadRequestError(err.message)
         }
     }
-
     
-    public async updateVotesQuantity(vQuantity: number, commentId: string): Promise<any> {
+    public async updateVotesCommentQuantity(vQuantity: number, commentId: string): Promise<any> {
         await this.db.collection(this.commentsCollection).doc(commentId)
             .set({ votesQuantity: vQuantity }, { merge: true });
     }
-
-
 
 }

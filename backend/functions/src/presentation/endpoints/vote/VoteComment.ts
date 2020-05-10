@@ -10,7 +10,8 @@ export const voteCommentEndpoint = async (req: Request, res: Response) => {
 
         const result = await voteCommentUC.execute({
             token: req.headers.auth as string,
-            commentId: req.params.postId,
+            commentId: req.params.commentId,
+            postId: req.params.postId,
             voteDirection: req.body.voteDirection
         });
 

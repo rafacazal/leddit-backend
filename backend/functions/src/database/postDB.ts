@@ -30,11 +30,8 @@ export class PostDB extends BaseDB implements PostGateway {
     public async getPostDetails(postId: string): Promise<any> {
 
         try {
-
             const postDetails = await this.db.collection(this.postsCollection).doc(postId).get();
-            console.log(postDetails.data())
             return postDetails.data()
-
 
         } catch (err) {
             throw new BadRequestError(err.message)

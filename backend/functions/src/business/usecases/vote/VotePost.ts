@@ -9,7 +9,6 @@ export class VotePostUC {
         private voteGateway: VoteGateway,
 
         private postGateway: PostGateway
-
     ) { }
 
     async execute(input: VotePostInput): Promise<VotePostOutput> {
@@ -30,7 +29,7 @@ export class VotePostUC {
 
             const postData = await this.postGateway.getPostDetails(input.postId)
 
-            await this.postGateway.updateVotesQuantity(postData.votesQuantity + 1 || -1, input.postId)
+            await this.postGateway.updateVotesQuantity(postData.votesQuantity +1, input.postId)
 
             return {
                 message: "voto computado com sucesso"

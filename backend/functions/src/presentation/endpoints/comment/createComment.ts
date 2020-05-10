@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import { CreateCommentUC } from "../../../business/usecases/comment/CreateComment";
 import { CommentDB } from "../../../database/commentDB";
-import { PostDB } from "../../../database/postDB";
 
 
 export const createCommentEndpoint = async (req: Request, res: Response) => {
     try {
-        const createCommentUC = new CreateCommentUC(new CommentDB(), new PostDB());
+        const createCommentUC = new CreateCommentUC(new CommentDB());
 
         const result = await createCommentUC.execute({
             userId: req.headers.auth as string,

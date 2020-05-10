@@ -2,12 +2,10 @@ import { CommentGateway } from "../../gateways/CommentGateway";
 import Comment from "../../entities/comment";
 import { BadRequestError } from "../../errors/badRequestError";
 import { FirebaseAdmin } from "../../../utils/firebaseAdmin";
-import { PostGateway } from '../../gateways/PostGateway';
 
 export class CreateCommentUC {
     constructor(
-        private commentGateway: CommentGateway,
-        private postGateway: PostGateway
+        private commentGateway: CommentGateway
     ) { }
 
     async execute(input: CreateCommentInput): Promise<CreateCommentOutput> {
@@ -26,10 +24,6 @@ export class CreateCommentUC {
             );
 
            await this.commentGateway.createComment(newComment)
-
-           const postData =  await this.postGateway.getPostDetails(input.postId)
-            
-            await this.postGateway.updateCommentsQuantity(postData.commentsQuantity + 1,  input.postId)
 
            return {
                 message: "comentario criado com sucesso"

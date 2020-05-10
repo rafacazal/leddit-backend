@@ -1,6 +1,7 @@
 import { PostGateway } from "../../gateways/PostGateway";
 import Post from "../../entities/post";
 import { FirebaseAdmin } from "../../../utils/firebaseAdmin";
+import { BadRequestError } from "../../errors/badRequestError";
 
 export class CreatePostUC {
     constructor(
@@ -30,7 +31,7 @@ export class CreatePostUC {
             }
 
         } catch (e) {
-            throw new Error(e)
+            throw new BadRequestError( 'error creating new post')
         }
     }
 }

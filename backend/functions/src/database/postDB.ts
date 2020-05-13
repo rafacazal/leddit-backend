@@ -14,16 +14,14 @@ export class PostDB extends BaseDB implements PostGateway {
             const userId = await this.db.collection('users')
                 .doc(post.getAuthorName()).get()
         
-           const result =  await this.db.collection(this.postsCollection).add({
+           const result = await this.db.collection(this.postsCollection).doc(post.getId()).set({
                 author: userId.data()?.nickname,
-                id: post.getId(),
                 title: post.getTitle(),
                 text: post.getText(),
                 commentsQuantity: 0,
                 votesQuantity: 0
-            })
+        })
 
-            console.log(result)
             return result
 
         } catch (error) {

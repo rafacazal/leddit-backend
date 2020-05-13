@@ -9,10 +9,8 @@ export const createCommentEndpoint = async (req: Request, res: Response) => {
 
         const result = await createCommentUC.execute({
             userId: req.headers.auth as string,
-            id: req.body.id,
             postId: req.params.postId,
-            text: req.body.text,
-            votesQuantity: req.body.votesQuantity
+            text: req.body.text
         });
 
         res.status(200).send(result);

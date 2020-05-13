@@ -19,9 +19,7 @@ export class CreateCommentUC {
             const newComment = new Comment(
                 userId,
                 input.postId,
-                input.text,
-                input.id,
-                input.votesQuantity
+                input.text
             );
 
            await this.commentGateway.createComment(newComment)
@@ -40,9 +38,7 @@ export class CreateCommentUC {
 export interface CreateCommentInput {
     userId: string,
     postId: string,
-    text: string,
-    id: string,
-    votesQuantity: number 
+    text: string
 }
 
 export interface CreateCommentOutput {

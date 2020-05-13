@@ -1,16 +1,12 @@
 export default class Post {
   constructor(
-    private id: string,
     private authorName: string,
     private title: string,
     private text: string,
-    public commentsQuantity: number,
-    public votesQuantity: number
+    public commentsQuantity?: number,
+    public votesQuantity?: number,
+    private id?: string
   ) { }
-
-  public getId(): string {
-    return this.id;
-  }
 
   public getAuthorName(): string {
     return this.authorName;
@@ -32,5 +28,8 @@ export default class Post {
     return this.votesQuantity || 0;
   }
 
+  public getId(): string | undefined {
+    return this.id;
+  }
 
 }

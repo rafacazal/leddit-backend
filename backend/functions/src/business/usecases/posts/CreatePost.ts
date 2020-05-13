@@ -17,12 +17,9 @@ export class CreatePostUC {
             const userId = await auth.getIdFromToken(input.author);
 
             const newPost = new Post(
-                input.id,
-                userId,
+                userId, 
                 input.title,
-                input.text,
-                input.commentsQuantity,
-                input.votesQuantity
+                input.text
             );
 
              await this.postGateway.createPost(newPost)
@@ -36,8 +33,5 @@ export class CreatePostUC {
 export interface CreatePostInput {
     author: string,
     title: string,
-    text: string,
-    id: string,
-    commentsQuantity: number,
-    votesQuantity: number
+    text: string
 }

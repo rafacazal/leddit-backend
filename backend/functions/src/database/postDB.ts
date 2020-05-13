@@ -14,8 +14,8 @@ export class PostDB extends BaseDB implements PostGateway {
             const userId = await this.db.collection('users')
                 .doc(post.getAuthorName()).get()
         
-           const result = await this.db.collection(this.postsCollection).doc(post.getId()).set({
-                author: userId.data()?.nickname,
+           const result = await this.db.collection(this.postsCollection).add({
+                author: userId.data()?.username,
                 title: post.getTitle(),
                 text: post.getText(),
                 commentsQuantity: 0,
@@ -36,12 +36,12 @@ export class PostDB extends BaseDB implements PostGateway {
             
             return result.data()?.map( ( doc: any ) => {
                 let posts = new Post(
-                  doc.data().id,
                   doc.data().authorName,
                   doc.data().text,
                   doc.data().title,
                   doc.data().commentsQuantity,
-                  doc.data().votesQuantity
+                  doc.data().votesQuantity,
+                  doc.id
                 )
           
                 return posts
@@ -64,12 +64,12 @@ export class PostDB extends BaseDB implements PostGateway {
             
             return result.docs.map( ( doc ) => {
                 let posts = new Post(
-                  doc.data().id,
-                  doc.data().authorName,
+                  doc.data().author,
                   doc.data().text,
                   doc.data().title,
                   doc.data().commentsQuantity,
-                  doc.data().votesQuantity
+                  doc.data().votesQuantity,
+                  doc.id
                 )
           
                 return posts

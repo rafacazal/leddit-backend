@@ -15,7 +15,7 @@ export class CommentDB extends BaseDB implements CommentGateway {
             const userId = await this.db.collection(this.usersCollection)
                 .doc(comment.getUserId()).get()
 
-            const result = await this.db.collection(this.commentsCollection).doc(comment.getId()).set({
+            const result = await this.db.collection(this.commentsCollection).add({
                     userName: userId.data()?.username,
                     postId: comment.getPostId(),
                     text: comment.getText(),
@@ -23,6 +23,7 @@ export class CommentDB extends BaseDB implements CommentGateway {
                 })
             
                 return result
+
         } catch (error) {
             throw new Error(error)
         };
@@ -30,10 +31,18 @@ export class CommentDB extends BaseDB implements CommentGateway {
 
     public async getCommentsDetails(commentId: string): Promise<any> {
         try {
-            const commentDetails = await this.db.collection(this.commentsCollection).doc(commentId).get();
-            
-            return commentDetails.data()
-
+            const result = await this.db.collection(this.commentsCollection).doc(commentId).get();
+           
+            return result.data()?.map( ( doc: any ) => {
+                let comments = new Comment(
+                  doc.data().userName,
+                  doc.data().text,
+                  doc.data().votesQuantity,
+                  doc.id
+                )
+          
+                return comments
+        })
         } catch (err) {
             throw new BadRequestError(err.message)
         }

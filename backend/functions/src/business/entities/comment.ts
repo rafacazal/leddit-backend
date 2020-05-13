@@ -1,10 +1,10 @@
 export default class Comment {
     constructor(
-      private id: string,
       private userId: string,
       private postId: string,
       private text: string,
-      private votesQuantity: number
+      private votesQuantity?: number,
+      private id?: string
     ) { }
 
     public getUserId(): string {
@@ -14,17 +14,17 @@ export default class Comment {
     public getPostId(): string {
       return this.postId;
     }
-  
-    public getId(): string {
-      return this.id;
-    }
-  
+
      public getText(): string {
       return this.text;
     }
 
     public getVotesQuantity(): number {
       return this.votesQuantity || 0;
+    }
+  
+    public getId(): string | undefined {
+      return this.id;
     }
   
   }

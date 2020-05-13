@@ -20,6 +20,7 @@ export class CreateCommentUC {
                 userId,
                 input.postId,
                 input.text,
+                input.id,
                 input.votesQuantity
             );
 
@@ -30,8 +31,7 @@ export class CreateCommentUC {
            }
 
         } catch (e) {
-            console.log(e)
-            throw new BadRequestError("error creating new comment")
+            throw new BadRequestError(e)
 
         }
     }
@@ -41,6 +41,7 @@ export interface CreateCommentInput {
     userId: string,
     postId: string,
     text: string,
+    id: string,
     votesQuantity: number 
 }
 

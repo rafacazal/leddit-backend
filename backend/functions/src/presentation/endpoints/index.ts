@@ -9,10 +9,10 @@ import { getPostDetailsEndpoint } from "./post/GetPostDetails";
 import { votePostEndpoint } from './vote/VotePost';
 import { getCommentsDetailsEndpoint } from "./comment/GetCommentsDetails";
 import { voteCommentEndpoint } from "./vote/VoteComment";
+import { getAllPostsEndpoint } from "./post/GetAllPosts";
 
 export const app = express();
-app.use(cors({ origin: true }), express.json());
-
+app.use(cors(), express.json());
 
 // user
 app.post('/login', loginEndpoint);
@@ -21,18 +21,17 @@ app.post('/signup', signupEndpoint);
 
 app.post('/password', changePasswordEndpoint);
 
-
 // posts
 app.post('/create/post', createPostsEndpoint);
 
 app.get('/posts/:postId', getPostDetailsEndpoint);
 
+app.get('/posts', getAllPostsEndpoint);
 
 // comments
 app.post('/posts/:postId/comment', createCommentEndpoint);
 
 app.get('/comments/:commentId', getCommentsDetailsEndpoint);
-
 
 // vote 
 app.post('/posts/:postId/vote', votePostEndpoint);

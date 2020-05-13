@@ -16,6 +16,7 @@ export class CommentDB extends BaseDB implements CommentGateway {
                 .doc(comment.getUserId()).get()
 
             await this.db.collection(this.commentsCollection).doc().set({
+                id: comment.getId(),
                 userName: userId.data()?.username,
                 postId: comment.getPostId(),
                 text: comment.getText(),
@@ -23,7 +24,7 @@ export class CommentDB extends BaseDB implements CommentGateway {
             })
 
         } catch (error) {
-            console.log('Error creating new post:', error);
+            throw new Error(error)
         };
     }
 

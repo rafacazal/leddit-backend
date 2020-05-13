@@ -13,30 +13,46 @@ export class PostDB extends BaseDB implements PostGateway {
 
             const userId = await this.db.collection('users')
                 .doc(post.getAuthorName()).get()
-
-            await this.db.collection(this.postsCollection).doc().set({
+        
+           const result =  await this.db.collection(this.postsCollection).add({
                 author: userId.data()?.nickname,
+                id: post.getId(),
                 title: post.getTitle(),
                 text: post.getText(),
                 commentsQuantity: 0,
                 votesQuantity: 0
             })
 
+            console.log(result)
+            return result
+
         } catch (error) {
             console.log('Error creating new post:', error);
         };
     }
 
-    public async getPostDetails(postId: string): Promise<any> {
+    public async getPostDetails(postId: string): Promise<Post> {
 
         try {
-            const postDetails = await this.db.collection(this.postsCollection).doc(postId).get();
-            return postDetails.data()
-
+            const result = await this.db.collection(this.postsCollection).doc(postId).get();
+            
+            return result.data()?.map( ( doc: any ) => {
+                let posts = new Post(
+                  doc.data().id,
+                  doc.data().authorName,
+                  doc.data().text,
+                  doc.data().title,
+                  doc.data().commentsQuantity,
+                  doc.data().votesQuantity
+                )
+          
+                return posts
+        })
         } catch (err) {
             throw new BadRequestError(err.message)
         }
-    }
+}
+
 
     public async updateCommentsQuantity(cQuantity: number, postId: string): Promise<any> {
         await this.db.collection(this.postsCollection).doc(postId)
@@ -44,6 +60,27 @@ export class PostDB extends BaseDB implements PostGateway {
     }
 
     
+    public async getAllPosts(): Promise<Post[]> {
+        try {
+            const result = await this.db.collection(this.postsCollection).get();
+            
+            return result.docs.map( ( doc ) => {
+                let posts = new Post(
+                  doc.data().id,
+                  doc.data().authorName,
+                  doc.data().text,
+                  doc.data().title,
+                  doc.data().commentsQuantity,
+                  doc.data().votesQuantity
+                )
+          
+                return posts
+        })
+        } catch (err) {
+            throw new BadRequestError(err.message)
+        }
+    }
+
     public async updateVotesQuantity(vQuantity: number, postId: string): Promise<any> {
         await this.db.collection(this.postsCollection).doc(postId)
             .set({ votesQuantity: vQuantity }, { merge: true });

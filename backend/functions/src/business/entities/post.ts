@@ -1,5 +1,6 @@
 export default class Post {
   constructor(
+    private id: string,
     private authorName: string,
     private title: string,
     private text: string,
@@ -7,12 +8,16 @@ export default class Post {
     public votesQuantity: number
   ) { }
 
-  public getTitle(): string {
-    return this.title;
+  public getId(): string {
+    return this.id;
   }
 
   public getAuthorName(): string {
     return this.authorName;
+  }
+
+  public getTitle(): string {
+    return this.title;
   }
 
   public getText(): string {

@@ -10,7 +10,7 @@ export class SignUpUC {
     
    try{
     const newUser = new User(
-      input.nickname,
+      input.username,
       input.email,
       input.password
     );
@@ -28,7 +28,7 @@ export class SignUpUC {
 }
 
 export interface SignUpInput {
-  nickname: string,
+  username: string,
   email: string,
   password: string
 }

@@ -1,12 +1,12 @@
 export default class User {
     constructor(
-      private nickname: string,
+      private username: string,
       private email: string,
       private password: string
     ) { }
 
     public getNickName(): string {
-      return this.nickname;
+      return this.username;
     }
   
     public getEmail(): string {
@@ -15,10 +15,6 @@ export default class User {
 
     public getPassword(): string {
       return this.password;
-    }
-  
-    public setNickName(nickname: string): void {
-      this.nickname = nickname;
     }
   
   }

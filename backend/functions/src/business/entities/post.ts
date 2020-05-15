@@ -3,16 +3,17 @@ export default class Post {
     private authorName: string,
     private title: string,
     private text: string,
-    public commentsQuantity: number,
-    public votesQuantity: number
+    public commentsQuantity?: number,
+    public votesQuantity?: number,
+    private id?: string
   ) { }
-
-  public getTitle(): string {
-    return this.title;
-  }
 
   public getAuthorName(): string {
     return this.authorName;
+  }
+
+  public getTitle(): string {
+    return this.title;
   }
 
   public getText(): string {
@@ -27,5 +28,8 @@ export default class Post {
     return this.votesQuantity || 0;
   }
 
+  public getId(): string | undefined {
+    return this.id;
+  }
 
 }

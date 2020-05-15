@@ -8,7 +8,7 @@ export class CreatePostUC {
         private postGateway: PostGateway
     ) { }
 
-    async execute(input: CreatePostInput): Promise<CreatePostOutput> {
+    async execute(input: CreatePostInput): Promise<any>{
 
         try {
 
@@ -17,21 +17,15 @@ export class CreatePostUC {
             const userId = await auth.getIdFromToken(input.author);
 
             const newPost = new Post(
-                userId,
+                userId, 
                 input.title,
-                input.text,
-                input.commentsQuantity,
-                input.votesQuantity
+                input.text
             );
 
-            await this.postGateway.createPost(newPost)
-
-            return {
-                message: "post criado com sucesso"
-            }
+             await this.postGateway.createPost(newPost)
 
         } catch (e) {
-            throw new BadRequestError( 'error creating new post')
+            throw new BadRequestError(e)
         }
     }
 }
@@ -39,11 +33,5 @@ export class CreatePostUC {
 export interface CreatePostInput {
     author: string,
     title: string,
-    text: string,
-    commentsQuantity: number,
-    votesQuantity: number
-}
-
-export interface CreatePostOutput {
-    message: string
+    text: string
 }

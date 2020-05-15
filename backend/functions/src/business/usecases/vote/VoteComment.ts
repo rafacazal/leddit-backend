@@ -31,7 +31,7 @@ export class VoteCommentUC {
             const commentData = await this.commentGateway.getCommentsDetails(input.commentId)
 
             const data = commentData.votesQuantity +1
-             await this.commentGateway.updateVotesCommentQuantity(data, input.commentId)
+            await this.commentGateway.updateVotesCommentQuantity(data, input.commentId)
             
             return ({ message: "voto computado com sucesso"})
         } catch (e) {

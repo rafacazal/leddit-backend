@@ -22,34 +22,34 @@ export class PostDB extends BaseDB implements PostGateway {
                 votesQuantity: 0
         })
 
-            return result
+            return result.id
 
         } catch (error) {
             console.log('Error creating new post:', error);
         };
     }
 
-    public async getPostDetails(postId: string): Promise<Post> {
+    public async getPostDetails(postId: string): Promise<any> {
 
         try {
             const result = await this.db.collection(this.postsCollection).doc(postId).get();
             
-            return result.data()?.map( ( doc: any ) => {
-                let posts = new Post(
-                  doc.data().authorName,
-                  doc.data().text,
-                  doc.data().title,
-                  doc.data().commentsQuantity,
-                  doc.data().votesQuantity,
-                  doc.id
-                )
+            return result.docs.map( ( doc ) => {
+                let posts = {
+                  author: doc.data().author,
+                  text: doc.data().text,
+                  title: doc.data().title,
+                  commentsQuantity: doc.data().commentsQuantity,
+                  votesQuantity: doc.data().votesQuantity,
+                  id: doc.id
+                }
           
                 return posts
         })
         } catch (err) {
             throw new BadRequestError(err.message)
         }
-}
+    }
 
 
     public async updateCommentsQuantity(cQuantity: number, postId: string): Promise<any> {

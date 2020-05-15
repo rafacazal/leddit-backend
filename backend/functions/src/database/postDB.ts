@@ -33,19 +33,31 @@ export class PostDB extends BaseDB implements PostGateway {
 
         try {
             const result = await this.db.collection(this.postsCollection).doc(postId).get();
+
+            const resultComments = await this.db.collection('comments').where("postId", "==", postId).get();
             
-            return result.docs.map( ( doc ) => {
-                let posts = {
-                  author: doc.data().author,
-                  text: doc.data().text,
-                  title: doc.data().title,
-                  commentsQuantity: doc.data().commentsQuantity,
-                  votesQuantity: doc.data().votesQuantity,
-                  id: doc.id
+            const comments = resultComments.docs.map( (doc) => {
+                
+                const comment = {
+                text: doc.data().text,
+                userName: doc.data().userName,
+                votesQuantity: doc.data().votesQuantity,
+            }
+                return comment
+            })
+            
+                let postDetails = {
+                  author: result.data()?.author,
+                  text: result.data()?.text,
+                  title: result.data()?.title,
+                  commentsQuantity: result.data()?.commentsQuantity,
+                  votesQuantity: result.data()?.votesQuantity,
+                  id: result.data()?.id,
+                  comments
                 }
-          
-                return posts
-        })
+                
+                return postDetails
+            
         } catch (err) {
             throw new BadRequestError(err.message)
         }
